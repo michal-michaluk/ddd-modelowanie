@@ -1,11 +1,16 @@
 package devices.configuration.remote;
 
+import org.jetbrains.annotations.NotNull;
+
 import java.time.Duration;
 import java.util.List;
 import java.util.Set;
 import java.util.regex.Pattern;
 
 public class IntervalRulesFixture {
+
+    private static final String T_53_8264_019 = "t53_8264_019";
+    private static final String EVB_P_4562137 = "EVB-P4562137";
 
     public static IntervalRules currentRules() {
         return new IntervalRules(
@@ -37,5 +42,50 @@ public class IntervalRulesFixture {
                 List.of(IntervalRules.byProtocolRule(Duration.ofSeconds(600), Protocols.IoT20)),
                 Duration.ofSeconds(1800)
         );
+    }
+
+    @NotNull
+    public static Deviceish.DeviceishBuilder givenDevice() {
+        return Deviceish.builder()
+                .deviceId("EVB-P4123437")
+                .model("Garo")
+                .vendor("CPF25 Family")
+                .protocol(Protocols.IoT16);
+    }
+
+    public static Deviceish notMatchingAnyRule() {
+        return givenDevice().build();
+    }
+
+    public static Deviceish matchingDeviceIdRule1() {
+        return givenDevice()
+                .deviceId(EVB_P_4562137)
+                .build();
+    }
+
+    public static Deviceish matchingDeviceIdRule2() {
+        return givenDevice()
+                .deviceId(T_53_8264_019)
+                .build();
+    }
+
+    public static Deviceish matchingStrictModelRule() {
+        return IntervalRulesFixture.givenDevice()
+                .vendor("ChargeStorm AB")
+                .model("Chargestorm Connected")
+                .build();
+    }
+
+    public static Deviceish matchingRegexModelRule() {
+        return IntervalRulesFixture.givenDevice()
+                .vendor("EV-BOX")
+                .model("G3-M5320E-F2-5321")
+                .build();
+    }
+
+    public static Deviceish matchingProtocol20Rule() {
+        return IntervalRulesFixture.givenDevice()
+                .protocol(Protocols.IoT20)
+                .build();
     }
 }
