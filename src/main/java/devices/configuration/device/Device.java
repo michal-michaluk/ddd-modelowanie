@@ -35,4 +35,21 @@ public class Device {
                 .showOnMapButNoPublicAccess(settings.isShowOnMap() && !settings.isPublicAccess())
                 .build();
     }
+
+    public DeviceSnapshot toSnapshot() {
+        Violations violations = checkViolations();
+        Visibility visibility = Visibility.basedOn(
+                violations.isValid() && settings.isPublicAccess(),
+                settings.isShowOnMap()
+        );
+        return new DeviceSnapshot(
+                deviceId,
+                ownership,
+                location,
+                openingHours,
+                settings,
+                violations,
+                visibility
+        );
+    }
 }
