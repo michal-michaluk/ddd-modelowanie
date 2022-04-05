@@ -90,6 +90,10 @@ public class IntervalRulesFixture {
                 .build().toDevice();
     }
 
+    public static String brokenRules() {
+        return "";
+    }
+
     @Builder
     private static class TestDevice {
         String deviceId;
