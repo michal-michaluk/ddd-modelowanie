@@ -1,6 +1,5 @@
 package devices.configuration.remote.iot20;
 
-import devices.configuration.remote.Deviceish;
 import devices.configuration.remote.Protocols;
 import lombok.Value;
 
@@ -36,7 +35,7 @@ class BootNotificationRequest {
         Watchdog
     }
 
-    Deviceish toDevice(String deviceId, Protocols protocol) {
-        return new Deviceish(deviceId, device.getVendorName(), device.getModel(), protocol);
+    devices.configuration.remote.intervals.Device toDevice(String deviceId, Protocols protocol) {
+        return new devices.configuration.remote.intervals.Device(deviceId, device.getVendorName(), device.getModel(), protocol);
     }
 }

@@ -1,4 +1,4 @@
-package devices.configuration.remote;
+package devices.configuration.remote.intervals;
 
 import org.assertj.core.api.Assertions;
 import org.junit.jupiter.api.Test;
@@ -11,7 +11,7 @@ class IntervalRulesTest {
 
     @Test
     void matchInFirstDeviceIdRule() {
-        Deviceish device = IntervalRulesFixture.matchingDeviceIdRule1();
+        Device device = IntervalRulesFixture.matchingDeviceIdRule1();
 
         Duration interval = rules.calculateInterval(device);
 
@@ -20,7 +20,7 @@ class IntervalRulesTest {
 
     @Test
     void matchInSecondDeviceIdRule() {
-        Deviceish device = IntervalRulesFixture.matchingDeviceIdRule2();
+        Device device = IntervalRulesFixture.matchingDeviceIdRule2();
 
         Duration interval = rules.calculateInterval(device);
 
@@ -29,7 +29,7 @@ class IntervalRulesTest {
 
     @Test
     void matchInStrictModelRule() {
-        Deviceish device = IntervalRulesFixture.matchingStrictModelRule();
+        Device device = IntervalRulesFixture.matchingStrictModelRule();
 
         Duration interval = rules.calculateInterval(device);
 
@@ -38,7 +38,7 @@ class IntervalRulesTest {
 
     @Test
     void matchInRegexpModelRule() {
-        Deviceish device = IntervalRulesFixture.matchingRegexModelRule();
+        Device device = IntervalRulesFixture.matchingRegexModelRule();
 
         Duration interval = rules.calculateInterval(device);
 
@@ -47,7 +47,7 @@ class IntervalRulesTest {
 
     @Test
     void matchInProtocolRule() {
-        Deviceish device = IntervalRulesFixture.matchingProtocol20Rule();
+        Device device = IntervalRulesFixture.matchingProtocol20Rule();
 
         Duration interval = rules.calculateInterval(device);
 
@@ -56,7 +56,7 @@ class IntervalRulesTest {
 
     @Test
     void returnDefaultInterval() {
-        Deviceish device = IntervalRulesFixture.notMatchingAnyRule();
+        Device device = IntervalRulesFixture.notMatchingAnyRule();
 
         Duration interval = rules.calculateInterval(device);
 

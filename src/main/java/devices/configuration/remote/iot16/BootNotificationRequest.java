@@ -1,7 +1,7 @@
 package devices.configuration.remote.iot16;
 
-import devices.configuration.remote.Deviceish;
 import devices.configuration.remote.Protocols;
+import devices.configuration.remote.intervals.Device;
 import lombok.Value;
 
 @Value
@@ -16,7 +16,7 @@ class BootNotificationRequest {
     String meterType;
     String meterSerialNumber;
 
-    Deviceish toDevice(String deviceId, Protocols protocol) {
-        return new Deviceish(deviceId, chargePointVendor, chargePointModel, protocol);
+    Device toDevice(String deviceId, Protocols protocol) {
+        return new Device(deviceId, chargePointVendor, chargePointModel, protocol);
     }
 }

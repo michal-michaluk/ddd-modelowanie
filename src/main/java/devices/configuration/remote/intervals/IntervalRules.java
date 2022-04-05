@@ -1,4 +1,6 @@
-package devices.configuration.remote;
+package devices.configuration.remote.intervals;
+
+import devices.configuration.remote.Protocols;
 
 import java.time.Duration;
 import java.util.Collection;
@@ -8,7 +10,7 @@ import java.util.Set;
 import java.util.regex.Pattern;
 import java.util.stream.Stream;
 
-public record IntervalRules(
+record IntervalRules(
         List<DeviceIdRule> byIds,
         List<ModelRule> byModel,
         List<ProtocolRule> byProtocol,
@@ -26,7 +28,7 @@ public record IntervalRules(
         return new ProtocolRule(interval, protocol);
     }
 
-    public Duration calculateInterval(Deviceish device) {
+    Duration calculateInterval(Device device) {
         return Stream.of(byIds, byModel, byProtocol)
                 .flatMap(Collection::stream)
                 .filter(rule -> rule.matches(device))
@@ -36,21 +38,21 @@ public record IntervalRules(
     }
 
     interface Rule {
-        boolean matches(Deviceish device);
+        boolean matches(Device device);
 
         Duration interval();
     }
 
     record DeviceIdRule(Duration interval, Set<String> devices) implements Rule {
         @Override
-        public boolean matches(Deviceish device) {
+        public boolean matches(Device device) {
             return devices.contains(device.deviceId());
         }
     }
 
     record ModelRule(Duration interval, String vendor, Pattern model) implements Rule {
         @Override
-        public boolean matches(Deviceish device) {
+        public boolean matches(Device device) {
             return Objects.equals(vendor, device.vendor())
                     && model.matcher(device.model()).matches();
         }
@@ -58,7 +60,7 @@ public record IntervalRules(
 
     record ProtocolRule(Duration interval, Protocols protocol) implements Rule {
         @Override
-        public boolean matches(Deviceish device) {
+        public boolean matches(Device device) {
             return Objects.equals(protocol, device.protocol());
         }
     }

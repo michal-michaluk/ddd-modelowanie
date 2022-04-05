@@ -1,5 +1,6 @@
-package devices.configuration.remote;
+package devices.configuration.remote.intervals;
 
+import devices.configuration.remote.Protocols;
 import lombok.Builder;
 import org.jetbrains.annotations.NotNull;
 
@@ -54,37 +55,37 @@ public class IntervalRulesFixture {
                 .protocol(Protocols.IoT16);
     }
 
-    public static Deviceish notMatchingAnyRule() {
+    public static Device notMatchingAnyRule() {
         return givenDevice().build().toDevice();
     }
 
-    public static Deviceish matchingDeviceIdRule1() {
+    public static Device matchingDeviceIdRule1() {
         return givenDevice()
                 .deviceId(EVB_P_4562137)
                 .build().toDevice();
     }
 
-    public static Deviceish matchingDeviceIdRule2() {
+    public static Device matchingDeviceIdRule2() {
         return givenDevice()
                 .deviceId(T_53_8264_019)
                 .build().toDevice();
     }
 
-    public static Deviceish matchingStrictModelRule() {
+    public static Device matchingStrictModelRule() {
         return IntervalRulesFixture.givenDevice()
                 .vendor("ChargeStorm AB")
                 .model("Chargestorm Connected")
                 .build().toDevice();
     }
 
-    public static Deviceish matchingRegexModelRule() {
+    public static Device matchingRegexModelRule() {
         return IntervalRulesFixture.givenDevice()
                 .vendor("EV-BOX")
                 .model("G3-M5320E-F2-5321")
                 .build().toDevice();
     }
 
-    public static Deviceish matchingProtocol20Rule() {
+    public static Device matchingProtocol20Rule() {
         return IntervalRulesFixture.givenDevice()
                 .protocol(Protocols.IoT20)
                 .build().toDevice();
@@ -97,8 +98,8 @@ public class IntervalRulesFixture {
         String model;
         Protocols protocol;
 
-        Deviceish toDevice() {
-            return new Deviceish(
+        Device toDevice() {
+            return new Device(
                     deviceId,
                     vendor,
                     model,
