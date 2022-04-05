@@ -1,6 +1,6 @@
 plugins {
     id "org.springframework.boot" version "2.6.1"
-    id "org.springframework.cloud.contract" version "3.0.3"
+//    id "org.springframework.cloud.contract" version "3.0.3"
     id "io.spring.dependency-management" version "1.0.11.RELEASE"
     id "java"
     id "au.com.dius.pact" version "4.1.7"
@@ -70,27 +70,27 @@ test {
     useJUnitPlatform()
 }
 
-contracts {
-    testFramework = "JUNIT5"
+//contracts {
+//    testFramework = "JUNIT5"
+//
+//    basePackageForTests = 'devices.configuration'
+//    baseClassMappings {
+//        baseClassMapping(".*config.*", "devices.configuration.configs.ContractTestingBase")
+//    }
+//}
+//
+//contractTest {
+//    useJUnitPlatform()
+//    testLogging {
+//        exceptionFormat = 'full'
+//    }
+//}
 
-    basePackageForTests = 'devices.configuration'
-    baseClassMappings {
-        baseClassMapping(".*config.*", "devices.configuration.configs.ContractTestingBase")
-    }
-}
-
-contractTest {
-    useJUnitPlatform()
-    testLogging {
-        exceptionFormat = 'full'
-    }
-}
-
-pact {
-    publish {
-        pactBrokerUrl = 'pact.broker.url'
-    }
-}
+//pact {
+//    publish {
+//        pactBrokerUrl = 'pact.broker.url'
+//    }
+//}
 
 configurations {
     //we exclude spring-boot-starter-logging, so that slf4j can switch to log4j2 (excluding logback-classic is not enough apparently)
@@ -101,6 +101,14 @@ configurations {
 
 compileJava {
     options.incremental = true
+    options.compilerArgs << "--enable-preview"
+    options.compilerArgs << "-parameters"
+    options.compilerArgs << "-Xlint:unchecked"
+}
+
+compileTestJava {
+    options.incremental = true
+    options.compilerArgs << "--enable-preview"
     options.compilerArgs << "-parameters"
     options.compilerArgs << "-Xlint:unchecked"
 }
