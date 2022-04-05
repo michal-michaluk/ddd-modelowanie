@@ -14,6 +14,10 @@ public record IntervalRules(
         List<ProtocolRule> byProtocol,
         Duration def) {
 
+    public static IntervalRules defaultRules() {
+        return new IntervalRules(List.of(), List.of(), List.of(), Duration.ofSeconds(1800));
+    }
+
     static DeviceIdRule byDeviceIdRule(Duration interval, Set<String> deviceId) {
         return new DeviceIdRule(interval, deviceId);
     }

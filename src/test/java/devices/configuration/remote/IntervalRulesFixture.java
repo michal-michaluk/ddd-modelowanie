@@ -1,6 +1,7 @@
 package devices.configuration.remote;
 
 import lombok.Builder;
+import org.intellij.lang.annotations.Language;
 import org.jetbrains.annotations.NotNull;
 
 import java.time.Duration;
@@ -91,7 +92,20 @@ public class IntervalRulesFixture {
     }
 
     public static String brokenRules() {
-        return "";
+        @Language("JSON") var json = """
+                {
+                  "byIds": [],
+                  "byModel": [
+                    {
+                      "interval": 60.000000000,
+                      "vendor": "any",
+                      "model": "notvalid regex ["
+                    }
+                  ],
+                  "byProtocol": [],
+                  "def": 1800.000000000
+                }""";
+        return json;
     }
 
     @Builder
