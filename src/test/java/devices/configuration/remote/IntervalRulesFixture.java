@@ -1,5 +1,6 @@
 package devices.configuration.remote;
 
+import lombok.Builder;
 import org.jetbrains.annotations.NotNull;
 
 import java.time.Duration;
@@ -45,8 +46,8 @@ public class IntervalRulesFixture {
     }
 
     @NotNull
-    public static Deviceish.DeviceishBuilder givenDevice() {
-        return Deviceish.builder()
+    public static TestDevice.TestDeviceBuilder givenDevice() {
+        return TestDevice.builder()
                 .deviceId("EVB-P4123437")
                 .model("Garo")
                 .vendor("CPF25 Family")
@@ -54,38 +55,55 @@ public class IntervalRulesFixture {
     }
 
     public static Deviceish notMatchingAnyRule() {
-        return givenDevice().build();
+        return givenDevice().build().toDevice();
     }
 
     public static Deviceish matchingDeviceIdRule1() {
         return givenDevice()
                 .deviceId(EVB_P_4562137)
-                .build();
+                .build().toDevice();
     }
 
     public static Deviceish matchingDeviceIdRule2() {
         return givenDevice()
                 .deviceId(T_53_8264_019)
-                .build();
+                .build().toDevice();
     }
 
     public static Deviceish matchingStrictModelRule() {
         return IntervalRulesFixture.givenDevice()
                 .vendor("ChargeStorm AB")
                 .model("Chargestorm Connected")
-                .build();
+                .build().toDevice();
     }
 
     public static Deviceish matchingRegexModelRule() {
         return IntervalRulesFixture.givenDevice()
                 .vendor("EV-BOX")
                 .model("G3-M5320E-F2-5321")
-                .build();
+                .build().toDevice();
     }
 
     public static Deviceish matchingProtocol20Rule() {
         return IntervalRulesFixture.givenDevice()
                 .protocol(Protocols.IoT20)
-                .build();
+                .build().toDevice();
+    }
+
+    @Builder
+    private static class TestDevice {
+        String deviceId;
+        String vendor;
+        String model;
+        Protocols protocol;
+
+        Deviceish toDevice() {
+            return new Deviceish(
+                    deviceId,
+                    vendor,
+                    model,
+                    protocol
+            );
+        }
     }
 }
