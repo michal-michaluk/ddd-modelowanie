@@ -1,5 +1,6 @@
 plugins {
     id "org.springframework.boot" version "2.6.1"
+    id "org.springframework.cloud.contract" version "3.0.3"
     id "io.spring.dependency-management" version "1.0.11.RELEASE"
     id "java"
     id "au.com.dius.pact" version "4.1.7"
@@ -23,9 +24,10 @@ dependencies {
     implementation "org.springframework.kafka:spring-kafka"
     implementation "org.springframework.boot:spring-boot-starter-security"
     implementation "org.springframework.boot:spring-boot-starter-log4j2"
-    implementation "io.micrometer:micrometer-core:1.5.5"
+    implementation "io.micrometer:micrometer-core:1.8.4"
     implementation "io.micrometer:micrometer-registry-prometheus"
     implementation "io.github.resilience4j:resilience4j-retry:1.7.1"
+    implementation 'org.hibernate:hibernate-validator:7.0.1.Final'
     implementation 'com.vladmihalcea:hibernate-types-52:2.14.0'
     implementation 'org.apache.httpcomponents:httpclient:4.5.13'
     implementation "io.vavr:vavr:0.9.3"
@@ -59,13 +61,29 @@ dependencies {
     testImplementation 'au.com.dius.pact.provider:junit5spring:4.3.4'
     testImplementation("org.skyscreamer:jsonassert:1.5.0")
     testImplementation("org.springframework.security:spring-security-test")
-
+    testImplementation 'org.springframework.cloud:spring-cloud-starter-contract-verifier:2.2.8.RELEASE'
     testCompileOnly "org.projectlombok:lombok:1.18.22"
     testAnnotationProcessor "org.projectlombok:lombok:1.18.22"
 }
 
 test {
     useJUnitPlatform()
+}
+
+contracts {
+    testFramework = "JUNIT5"
+
+    basePackageForTests = 'devices.configuration'
+    baseClassMappings {
+        baseClassMapping(".*config.*", "devices.configuration.configs.ContractTestingBase")
+    }
+}
+
+contractTest {
+    useJUnitPlatform()
+    testLogging {
+        exceptionFormat = 'full'
+    }
 }
 
 pact {
