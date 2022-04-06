@@ -1,8 +1,5 @@
 package devices.configuration.device;
 
-import lombok.Value;
-
-@Value
 public record DeviceSnapshot(
         String deviceId,
         Ownership ownership,
