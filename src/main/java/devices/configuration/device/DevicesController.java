@@ -24,16 +24,14 @@ public class DevicesController {
     @GetMapping(path = "/devices", params = {"page", "size"},
             produces = APPLICATION_JSON_VALUE)
     public Page<DeviceSnapshot> get(Pageable pageable) {
-        return repository.findAll(pageable)
-                .map(Device::toSnapshot);
+        return Page.empty(pageable); // todo cqrs;
     }
 
     @Transactional(readOnly = true)
     @GetMapping(path = "/devices/{deviceId}",
             produces = APPLICATION_JSON_VALUE)
     public Optional<DeviceSnapshot> get(@PathVariable String deviceId) {
-        return repository.findByDeviceId(deviceId)
-                .map(Device::toSnapshot);
+        return Optional.empty(); // todo cqrs;
     }
 
     @PatchMapping(path = "/devices/{deviceId}",

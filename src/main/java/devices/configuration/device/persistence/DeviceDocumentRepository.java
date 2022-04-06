@@ -29,7 +29,7 @@ public class DeviceDocumentRepository implements DeviceRepository {
 
     @Override
     public void save(Device device) {
-        repository.findById(device.deviceId())
+        repository.findById(id(device))
                 .ifPresent(e -> e.setDevice(device));
     }
 }
