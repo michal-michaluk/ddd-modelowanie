@@ -52,4 +52,8 @@ public class Device {
                 visibility
         );
     }
+
+    public String deviceId() {
+        return deviceId;
+    }
 }
